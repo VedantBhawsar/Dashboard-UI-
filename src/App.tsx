@@ -8,6 +8,11 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import Index from "./pages/Index";
 import Inbox from "./pages/Inbox";
+import Tasks from "./pages/Tasks";
+import Calendar from "./pages/Calendar";
+import Contacts from "./pages/Contacts";
+import Settings from "./pages/Settings";
+import Support from "./pages/Support";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -26,6 +31,11 @@ const App = () => (
                 <Routes>
                   <Route path="/" element={<Index />} />
                   <Route path="/inbox" element={<Inbox />} />
+                  <Route path="/tasks" element={<Tasks />} />
+                  <Route path="/calendar" element={<Calendar />} />
+                  <Route path="/contacts" element={<Contacts />} />
+                  <Route path="/settings" element={<Settings />} />
+                  <Route path="/support" element={<Support />} />
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>
