@@ -1,3 +1,4 @@
+import { useState } from "react"
 import {
   Calendar,
   Users,
@@ -7,7 +8,8 @@ import {
   HelpCircle,
   Search,
   Bell,
-  Crown
+  Crown,
+  Inbox
 } from "lucide-react"
 import { NavLink } from "react-router-dom"
 
@@ -26,9 +28,11 @@ import {
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { SearchPopup } from "@/components/search-popup"
 
 const menuItems = [
   { title: "Dashboard", url: "/", icon: LayoutDashboard },
+  { title: "Inbox", url: "/inbox", icon: Inbox },
   { title: "Tasks", url: "/tasks", icon: CheckSquare },
   { title: "Calendar", url: "/calendar", icon: Calendar },
   { title: "Contacts", url: "/contacts", icon: Users },
@@ -39,6 +43,7 @@ const menuItems = [
 export function AppSidebar() {
   const { state } = useSidebar()
   const collapsed = state === "collapsed"
+  const [searchOpen, setSearchOpen] = useState(false)
 
   return (
     <Sidebar className="border-r bg-card">
@@ -56,6 +61,7 @@ export function AppSidebar() {
             <Button 
               variant="ghost" 
               className="w-full justify-start gap-2 h-10 text-muted-foreground hover:text-foreground"
+              onClick={() => setSearchOpen(true)}
             >
               <Search className="h-4 w-4" />
               {!collapsed && <span>Quick Search</span>}
@@ -156,6 +162,8 @@ export function AppSidebar() {
           )}
         </div>
       </div>
+      
+      <SearchPopup open={searchOpen} onOpenChange={setSearchOpen} />
     </Sidebar>
   )
 }

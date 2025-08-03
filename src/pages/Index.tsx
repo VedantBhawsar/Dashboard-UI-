@@ -1,5 +1,6 @@
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { NotificationsPopup } from "@/components/notifications-popup"
 import { MetricCard } from "@/components/dashboard/metric-card"
 import { RevenueChart } from "@/components/dashboard/revenue-chart"
 import { CalendarWidget } from "@/components/dashboard/calendar-widget"
@@ -14,7 +15,10 @@ const Index = () => {
           <div className="flex items-center gap-4">
             <SidebarTrigger />
           </div>
-          <ThemeToggle />
+          <div className="flex items-center gap-4">
+            <NotificationsPopup />
+            <ThemeToggle />
+          </div>
         </div>
       </header>
 
