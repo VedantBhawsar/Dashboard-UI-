@@ -4,11 +4,11 @@ import { Progress } from "@/components/ui/progress"
 
 export function UserAcquisition() {
   return (
-    <Card className="col-span-3 hover:shadow-lg hover:shadow-primary/10 transition-all duration-300 group">
+    <Card className="col-span-3">
       <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle className="group-hover:text-primary transition-colors">User acquisition</CardTitle>
+        <CardTitle>User acquisition</CardTitle>
         <Select defaultValue="Month">
-          <SelectTrigger className="w-24 hover:border-primary transition-colors">
+          <SelectTrigger className="w-24">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
@@ -24,7 +24,7 @@ export function UserAcquisition() {
             <div className="text-3xl font-bold">64.28%</div>
             <div className="text-sm text-muted-foreground mb-1">of 4,000 users</div>
           </div>
-          <Progress value={64.28} className="h-2 transition-all duration-500 hover:h-3" />
+          <Progress value={64.28} className="h-2" />
         </div>
       </CardContent>
     </Card>

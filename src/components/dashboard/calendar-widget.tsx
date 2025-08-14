@@ -24,16 +24,16 @@ export function CalendarWidget() {
   ]
 
   return (
-    <Card className="hover:shadow-lg hover:shadow-primary/10 transition-all duration-300 group">
+    <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
-        <CardTitle className="text-lg group-hover:text-primary transition-colors">
+        <CardTitle className="text-lg">
           {monthNames[currentDate.getMonth()]} {currentDate.getFullYear()}
         </CardTitle>
         <div className="flex gap-1">
-          <Button variant="ghost" size="sm" className="hover:bg-primary/10 hover:text-primary transition-all duration-200">
+          <Button variant="ghost" size="sm">
             <ChevronLeft className="h-4 w-4" />
           </Button>
-          <Button variant="ghost" size="sm" className="hover:bg-primary/10 hover:text-primary transition-all duration-200">
+          <Button variant="ghost" size="sm">
             <ChevronRight className="h-4 w-4" />
           </Button>
         </div>
@@ -49,8 +49,8 @@ export function CalendarWidget() {
           {calendarDays.map((day, index) => (
             <div 
               key={day} 
-              className={`text-sm p-2 rounded-md cursor-pointer hover:bg-primary/10 hover:text-primary hover:scale-110 transition-all duration-200 ${
-                day === 9 ? "bg-primary text-primary-foreground font-medium shadow-lg" : ""
+              className={`text-sm p-2 rounded-md cursor-pointer hover:bg-accent ${
+                day === 9 ? "bg-primary text-primary-foreground font-medium" : ""
               }`}
             >
               {day}
@@ -61,10 +61,10 @@ export function CalendarWidget() {
         {/* Events List */}
         <div className="space-y-3">
           {events.map((event, index) => (
-            <div key={index} className="flex items-center gap-3 p-3 rounded-lg border hover:bg-primary/5 hover:border-primary/20 hover:scale-105 transition-all duration-300 cursor-pointer group">
-              <div className={`w-2 h-2 rounded-full ${event.color} group-hover:bg-primary transition-colors`} />
+            <div key={index} className="flex items-center gap-3 p-3 rounded-lg border hover:bg-accent/50 transition-colors">
+              <div className={`w-2 h-2 rounded-full ${event.color}`} />
               <div className="flex-1">
-                <div className="text-sm font-medium group-hover:text-primary transition-colors">{event.title}</div>
+                <div className="text-sm font-medium">{event.title}</div>
                 <div className="text-xs text-muted-foreground">{event.time}</div>
               </div>
             </div>

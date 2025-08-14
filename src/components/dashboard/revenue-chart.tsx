@@ -42,11 +42,11 @@ export function RevenueChart() {
   const [period, setPeriod] = useState("Year")
 
   return (
-    <Card className="col-span-2 hover:shadow-lg hover:shadow-primary/10 transition-all duration-300 group">
+    <Card className="col-span-2">
       <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle className="group-hover:text-primary transition-colors">Revenue</CardTitle>
+        <CardTitle>Revenue</CardTitle>
         <Select value={period} onValueChange={setPeriod}>
-          <SelectTrigger className="w-24 hover:border-primary transition-colors">
+          <SelectTrigger className="w-24">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>

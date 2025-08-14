@@ -60,7 +60,7 @@ export function AppSidebar() {
           <div className="px-2">
             <Button 
               variant="ghost" 
-              className="w-full justify-start gap-2 h-10 text-sidebar-foreground hover:text-primary hover:bg-sidebar-accent transition-all duration-200 hover:scale-105"
+              className="w-full justify-start gap-2 h-10 text-muted-foreground hover:text-foreground"
               onClick={() => setSearchOpen(true)}
             >
               <Search className="h-4 w-4" />
@@ -72,7 +72,7 @@ export function AppSidebar() {
           <div className="px-2">
             <Button 
               variant="ghost" 
-              className="w-full justify-between h-10 text-sidebar-foreground hover:text-primary hover:bg-sidebar-accent transition-all duration-200 hover:scale-105"
+              className="w-full justify-between h-10 text-muted-foreground hover:text-foreground"
             >
               <div className="flex items-center gap-2">
                 <Bell className="h-4 w-4" />
@@ -86,7 +86,7 @@ export function AppSidebar() {
           <div className="px-2">
             <Button 
               variant="ghost" 
-              className="w-full justify-between h-10 text-sidebar-foreground hover:text-primary hover:bg-sidebar-accent transition-all duration-200 hover:scale-105"
+              className="w-full justify-between h-10 text-muted-foreground hover:text-foreground"
             >
               <div className="flex items-center gap-2">
                 <Bell className="h-4 w-4" />
@@ -103,13 +103,13 @@ export function AppSidebar() {
                 {menuItems.map((item) => (
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton asChild>
-                       <NavLink 
+                      <NavLink 
                         to={item.url} 
                         className={({ isActive }) =>
-                          `flex items-center gap-2 h-10 px-2 rounded-md transition-all duration-200 hover:scale-105 ${
+                          `flex items-center gap-2 h-10 px-2 rounded-md transition-colors ${
                             isActive 
-                              ? "bg-primary text-primary-foreground font-medium shadow-lg" 
-                              : "text-sidebar-foreground hover:text-primary hover:bg-sidebar-accent"
+                              ? "bg-primary text-primary-foreground font-medium" 
+                              : "text-muted-foreground hover:text-foreground hover:bg-accent"
                           }`
                         }
                       >
