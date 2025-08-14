@@ -3,166 +3,312 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Plus, Search, Filter, Calendar, Clock, User } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { Plus, Search, Filter, Calendar, Clock, User, MoreHorizontal, LayoutGrid, List } from "lucide-react";
 
 const tasks = [
   {
     id: 1,
-    title: "Review project proposal",
-    description: "Go through the new client proposal and provide feedback",
-    priority: "high",
-    status: "pending",
-    dueDate: "2025-01-15",
-    assignee: "John Doe",
-    completed: false,
+    title: "Prepare a detailed feedback for a user survey",
+    description: "Create a 5-question survey to gather insights from beta users.",
+    priority: "low",
+    status: "todo",
+    dueDate: "July 12, 2025",
+    assignees: [
+      { id: 1, name: "John Doe", avatar: "/avatars/john.jpg", initials: "JD" },
+      { id: 2, name: "Jane Smith", avatar: "/avatars/jane.jpg", initials: "JS" }
+    ],
   },
   {
     id: 2,
-    title: "Update dashboard metrics",
-    description: "Refresh all KPI displays with latest data",
+    title: "Design a settings page",
+    description: "Create the layout and UI components for the new settings screen.",
     priority: "medium",
-    status: "in-progress",
-    dueDate: "2025-01-12",
-    assignee: "Jane Smith",
-    completed: false,
+    status: "todo",
+    dueDate: "July 9, 2025",
+    assignees: [
+      { id: 3, name: "Mike Johnson", avatar: "/avatars/mike.jpg", initials: "MJ" }
+    ],
   },
   {
     id: 3,
-    title: "Fix login bug",
-    description: "Resolve authentication issue on mobile devices",
-    priority: "high",
-    status: "pending",
-    dueDate: "2025-01-10",
-    assignee: "Mike Johnson",
-    completed: true,
+    title: "Plan and schedule next month's social media calendar",
+    description: "Draft next month's posts and assign content to the team.",
+    priority: "low",
+    status: "todo",
+    dueDate: "July 12, 2025",
+    assignees: [
+      { id: 1, name: "John Doe", avatar: "/avatars/john.jpg", initials: "JD" },
+      { id: 2, name: "Jane Smith", avatar: "/avatars/jane.jpg", initials: "JS" }
+    ],
   },
   {
     id: 4,
-    title: "Prepare quarterly report",
-    description: "Compile Q4 performance data and create presentation",
+    title: "Improve search functionality",
+    description: "Enhance relevance of results and add filters for better UX.",
+    priority: "high",
+    status: "in-progress",
+    dueDate: "July 8, 2025",
+    assignees: [
+      { id: 4, name: "Sarah Wilson", avatar: "/avatars/sarah.jpg", initials: "SW" }
+    ],
+  },
+  {
+    id: 5,
+    title: "Optimize the page speed for the website",
+    description: "Minimize JS bundles and compress images across the site.",
+    priority: "low",
+    status: "in-progress",
+    dueDate: "July 9, 2025",
+    assignees: [
+      { id: 2, name: "Jane Smith", avatar: "/avatars/jane.jpg", initials: "JS" },
+      { id: 3, name: "Mike Johnson", avatar: "/avatars/mike.jpg", initials: "MJ" }
+    ],
+  },
+  {
+    id: 6,
+    title: "Build pricing page",
+    description: "Design and develop the new pricing page with updated tiers.",
+    priority: "medium",
+    status: "in-progress",
+    dueDate: "July 7, 2025",
+    assignees: [
+      { id: 1, name: "John Doe", avatar: "/avatars/john.jpg", initials: "JD" },
+      { id: 4, name: "Sarah Wilson", avatar: "/avatars/sarah.jpg", initials: "SW" }
+    ],
+  },
+  {
+    id: 7,
+    title: "Test onboarding emails",
+    description: "QA the full welcome email series in staging environment.",
+    priority: "low",
+    status: "in-progress",
+    dueDate: "July 8, 2025",
+    assignees: [
+      { id: 4, name: "Sarah Wilson", avatar: "/avatars/sarah.jpg", initials: "SW" }
+    ],
+  },
+  {
+    id: 8,
+    title: "Fix 404 redirects",
+    description: "All broken links now redirect to a custom error page.",
     priority: "low",
     status: "completed",
-    dueDate: "2025-01-20",
-    assignee: "Sarah Wilson",
-    completed: true,
+    dueDate: "July 5, 2025",
+    assignees: [
+      { id: 3, name: "Mike Johnson", avatar: "/avatars/mike.jpg", initials: "MJ" }
+    ],
+  },
+  {
+    id: 9,
+    title: "Finalize the animation illustrations",
+    description: "Deliver the animation assets in .gif and .json formats.",
+    priority: "high",
+    status: "completed",
+    dueDate: "July 6, 2025",
+    assignees: [
+      { id: 2, name: "Jane Smith", avatar: "/avatars/jane.jpg", initials: "JS" }
+    ],
   },
 ];
 
 const priorityColors = {
-  high: "destructive",
-  medium: "default",
-  low: "secondary",
+  high: "bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400",
+  medium: "bg-orange-100 text-orange-800 dark:bg-orange-900/20 dark:text-orange-400",
+  low: "bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400",
 };
 
-const statusColors = {
-  pending: "outline",
-  "in-progress": "default",
-  completed: "secondary",
-};
+const columns = [
+  { id: "todo", title: "To do", count: 3 },
+  { id: "in-progress", title: "In progress", count: 4 },
+  { id: "under-review", title: "Under review", count: 0 },
+  { id: "completed", title: "Completed", count: 2 },
+];
 
 export default function Tasks() {
-  const [filter, setFilter] = useState("all");
+  const [viewMode, setViewMode] = useState("board");
   const [searchTerm, setSearchTerm] = useState("");
 
-  const filteredTasks = tasks.filter(task => {
-    const matchesSearch = task.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         task.description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesFilter = filter === "all" || task.status === filter;
-    return matchesSearch && matchesFilter;
-  });
+  const filteredTasks = tasks.filter(task => 
+    task.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    task.description.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
-  return (
-    <div className="flex-1 space-y-4 p-4 md:p-8 pt-6">
-      <div className="flex items-center justify-between space-y-2">
-        <div>
-          <h2 className="text-3xl font-bold tracking-tight text-foreground">Tasks</h2>
-          <p className="text-muted-foreground">
-            Manage your tasks and track progress.
-          </p>
+  const TaskCard = ({ task }: { task: typeof tasks[0] }) => (
+    <Card className="bg-card hover:shadow-md transition-all duration-200 border border-border/50">
+      <CardContent className="p-4 space-y-3">
+        <div className="flex items-start justify-between">
+          <h3 className="font-medium text-sm text-foreground leading-tight">{task.title}</h3>
+          <Button variant="ghost" size="icon" className="h-6 w-6 text-muted-foreground hover:text-foreground">
+            <MoreHorizontal className="h-3 w-3" />
+          </Button>
         </div>
-        <Button className="bg-primary hover:bg-primary/90">
-          <Plus className="mr-2 h-4 w-4" />
-          Create Task
-        </Button>
-      </div>
-
-      <div className="flex flex-col space-y-4 md:flex-row md:space-y-0 md:space-x-4">
-        <div className="flex-1">
-          <div className="relative">
-            <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-            <Input
-              placeholder="Search tasks..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-8"
-            />
+        
+        <p className="text-xs text-muted-foreground leading-relaxed">{task.description}</p>
+        
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-1 text-xs text-muted-foreground">
+            <Calendar className="h-3 w-3" />
+            <span>{task.dueDate}</span>
+          </div>
+          
+          <div className="flex items-center space-x-2">
+            <div className="flex -space-x-1">
+              {task.assignees.slice(0, 3).map((assignee, index) => (
+                <Avatar key={assignee.id} className="h-6 w-6 border-2 border-background">
+                  <AvatarImage src={assignee.avatar} alt={assignee.name} />
+                  <AvatarFallback className="text-xs bg-muted">{assignee.initials}</AvatarFallback>
+                </Avatar>
+              ))}
+              {task.assignees.length > 3 && (
+                <Avatar className="h-6 w-6 border-2 border-background">
+                  <AvatarFallback className="text-xs bg-muted">+{task.assignees.length - 3}</AvatarFallback>
+                </Avatar>
+              )}
+            </div>
           </div>
         </div>
-        <Select value={filter} onValueChange={setFilter}>
-          <SelectTrigger className="w-[180px]">
-            <Filter className="mr-2 h-4 w-4" />
-            <SelectValue placeholder="Filter by status" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All Tasks</SelectItem>
-            <SelectItem value="pending">Pending</SelectItem>
-            <SelectItem value="in-progress">In Progress</SelectItem>
-            <SelectItem value="completed">Completed</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
+        
+        <div className="flex justify-start">
+          <span className={`inline-flex items-center px-2 py-1 rounded-md text-xs font-medium ${priorityColors[task.priority as keyof typeof priorityColors]}`}>
+            {task.priority.charAt(0).toUpperCase() + task.priority.slice(1)}
+          </span>
+        </div>
+      </CardContent>
+    </Card>
+  );
 
-      <div className="grid gap-4">
-        {filteredTasks.map((task) => (
-          <Card key={task.id} className={`transition-all hover:shadow-md ${task.completed ? 'opacity-70' : ''}`}>
-            <CardHeader className="pb-3">
-              <div className="flex items-start justify-between">
-                <div className="flex items-start space-x-3">
-                  <Checkbox
-                    checked={task.completed}
-                    className="mt-1"
-                  />
-                  <div className="space-y-1">
-                    <CardTitle className={`text-lg ${task.completed ? 'line-through text-muted-foreground' : ''}`}>
-                      {task.title}
-                    </CardTitle>
-                    <p className="text-sm text-muted-foreground">
-                      {task.description}
-                    </p>
-                  </div>
-                </div>
-                <div className="flex space-x-2">
-                  <Badge variant={priorityColors[task.priority as keyof typeof priorityColors] as any}>
-                    {task.priority}
-                  </Badge>
-                  <Badge variant={statusColors[task.status as keyof typeof statusColors] as any}>
-                    {task.status}
-                  </Badge>
-                </div>
+  const BoardView = () => (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {columns.map((column) => {
+        const columnTasks = filteredTasks.filter(task => task.status === column.id);
+        
+        return (
+          <div key={column.id} className="space-y-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <h3 className="font-medium text-foreground">{column.title}</h3>
+                <span className="bg-muted text-muted-foreground text-xs px-2 py-1 rounded-md">
+                  {columnTasks.length}
+                </span>
               </div>
-            </CardHeader>
-            <CardContent className="pt-0">
-              <div className="flex items-center justify-between text-sm text-muted-foreground">
+              <div className="flex items-center space-x-1">
+                <Button variant="ghost" size="icon" className="h-6 w-6">
+                  <Plus className="h-3 w-3" />
+                </Button>
+                <Button variant="ghost" size="icon" className="h-6 w-6">
+                  <MoreHorizontal className="h-3 w-3" />
+                </Button>
+              </div>
+            </div>
+            
+            <div className="space-y-3">
+              {columnTasks.map((task) => (
+                <TaskCard key={task.id} task={task} />
+              ))}
+              
+              {column.id === "under-review" && columnTasks.length === 0 && (
+                <div className="border-2 border-dashed border-border rounded-lg p-6 text-center">
+                  <Button variant="ghost" className="text-muted-foreground hover:text-foreground">
+                    <Plus className="h-4 w-4 mr-2" />
+                    Create task
+                  </Button>
+                </div>
+              )}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+
+  const ListView = () => (
+    <div className="space-y-4">
+      {filteredTasks.map((task) => (
+        <Card key={task.id} className="hover:shadow-md transition-all duration-200">
+          <CardContent className="p-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-4 flex-1">
+                <div className="flex-1">
+                  <h3 className="font-medium text-foreground">{task.title}</h3>
+                  <p className="text-sm text-muted-foreground mt-1">{task.description}</p>
+                </div>
+                
                 <div className="flex items-center space-x-4">
-                  <div className="flex items-center space-x-1">
+                  <span className={`inline-flex items-center px-2 py-1 rounded-md text-xs font-medium ${priorityColors[task.priority as keyof typeof priorityColors]}`}>
+                    {task.priority.charAt(0).toUpperCase() + task.priority.slice(1)}
+                  </span>
+                  
+                  <div className="flex items-center space-x-1 text-sm text-muted-foreground">
                     <Calendar className="h-4 w-4" />
                     <span>{task.dueDate}</span>
                   </div>
-                  <div className="flex items-center space-x-1">
-                    <User className="h-4 w-4" />
-                    <span>{task.assignee}</span>
+                  
+                  <div className="flex -space-x-1">
+                    {task.assignees.slice(0, 3).map((assignee) => (
+                      <Avatar key={assignee.id} className="h-6 w-6 border-2 border-background">
+                        <AvatarImage src={assignee.avatar} alt={assignee.name} />
+                        <AvatarFallback className="text-xs bg-muted">{assignee.initials}</AvatarFallback>
+                      </Avatar>
+                    ))}
+                    {task.assignees.length > 3 && (
+                      <Avatar className="h-6 w-6 border-2 border-background">
+                        <AvatarFallback className="text-xs bg-muted">+{task.assignees.length - 3}</AvatarFallback>
+                      </Avatar>
+                    )}
                   </div>
                 </div>
-                <div className="flex items-center space-x-1">
-                  <Clock className="h-4 w-4" />
-                  <span>Due in 3 days</span>
-                </div>
               </div>
-            </CardContent>
-          </Card>
-        ))}
+            </div>
+          </CardContent>
+        </Card>
+      ))}
+    </div>
+  );
+
+  return (
+    <div className="flex-1 space-y-6 p-4 md:p-8 pt-6">
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-3xl font-bold tracking-tight text-foreground">Tasks</h2>
+          <p className="text-muted-foreground mt-1">
+            Visual representation of your project's journey.
+          </p>
+        </div>
+        <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">
+          <Plus className="mr-2 h-4 w-4" />
+          Create
+        </Button>
+      </div>
+
+      <div className="flex items-center justify-between">
+        <Tabs value={viewMode} onValueChange={setViewMode} className="w-auto">
+          <TabsList className="grid w-fit grid-cols-2">
+            <TabsTrigger value="board" className="flex items-center space-x-2">
+              <LayoutGrid className="h-4 w-4" />
+              <span>Board</span>
+            </TabsTrigger>
+            <TabsTrigger value="list" className="flex items-center space-x-2">
+              <List className="h-4 w-4" />
+              <span>List</span>
+            </TabsTrigger>
+          </TabsList>
+        </Tabs>
+        
+        <div className="relative w-80">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Input
+            placeholder="Search tasks..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="pl-10"
+          />
+        </div>
+      </div>
+
+      <div className="mt-6">
+        {viewMode === "board" ? <BoardView /> : <ListView />}
       </div>
     </div>
   );
