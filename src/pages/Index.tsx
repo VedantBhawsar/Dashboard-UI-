@@ -25,9 +25,9 @@ const Index = () => {
       {/* Main Content */}
       <main className="flex-1 p-6 space-y-6">
         {/* Welcome Section */}
-        <div className="space-y-2">
-          <h1 className="text-3xl font-bold tracking-tight">Morning, Ryan!</h1>
-          <p className="text-muted-foreground">Here's a quick overview of your business.</p>
+        <div className="space-y-2 animate-fade-in">
+          <h1 className="text-3xl font-bold tracking-tight hover:text-primary transition-colors cursor-default">Morning, Ryan!</h1>
+          <p className="text-muted-foreground hover:text-foreground transition-colors cursor-default">Here's a quick overview of your business.</p>
         </div>
 
         {/* Metrics Grid */}
