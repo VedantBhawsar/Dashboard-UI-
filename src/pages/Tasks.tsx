@@ -6,8 +6,26 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Plus, Search, Filter, Calendar, Clock, User, MoreHorizontal, LayoutGrid, List } from "lucide-react";
+import { CreateTaskSheet } from "@/components/create-task-sheet";
+import {
+  DndContext,
+  DragEndEvent,
+  DragOverEvent,
+  DragOverlay,
+  DragStartEvent,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  closestCorners,
+} from "@dnd-kit/core";
+import {
+  SortableContext,
+  useSortable,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
-const tasks = [
+const initialTasks = [
   {
     id: 1,
     title: "Prepare a detailed feedback for a user survey",
@@ -129,11 +147,97 @@ const columns = [
 export default function Tasks() {
   const [viewMode, setViewMode] = useState("board");
   const [searchTerm, setSearchTerm] = useState("");
+  const [tasks, setTasks] = useState(initialTasks);
+  const [activeTask, setActiveTask] = useState<typeof tasks[0] | null>(null);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 3,
+      },
+    })
+  );
 
   const filteredTasks = tasks.filter(task => 
     task.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
     task.description.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const handleCreateTask = (newTask: any) => {
+    setTasks(prev => [...prev, newTask]);
+  };
+
+  const handleDragStart = (event: DragStartEvent) => {
+    const { active } = event;
+    const task = tasks.find(t => t.id === active.id);
+    setActiveTask(task || null);
+  };
+
+  const handleDragOver = (event: DragOverEvent) => {
+    const { active, over } = event;
+    if (!over) return;
+
+    const activeId = active.id;
+    const overId = over.id;
+
+    if (activeId === overId) return;
+
+    const isActiveATask = tasks.some(task => task.id === activeId);
+    const isOverATask = tasks.some(task => task.id === overId);
+
+    if (!isActiveATask) return;
+
+    // Dropping a task over another task
+    if (isActiveATask && isOverATask) {
+      setTasks(prevTasks => {
+        const activeIndex = prevTasks.findIndex(task => task.id === activeId);
+        const overIndex = prevTasks.findIndex(task => task.id === overId);
+
+        if (prevTasks[activeIndex].status !== prevTasks[overIndex].status) {
+          prevTasks[activeIndex].status = prevTasks[overIndex].status;
+        }
+
+        return prevTasks;
+      });
+    }
+
+    // Dropping a task over a column
+    const isOverAColumn = columns.some(column => column.id === overId);
+    if (isActiveATask && isOverAColumn) {
+      setTasks(prevTasks => {
+        const activeIndex = prevTasks.findIndex(task => task.id === activeId);
+        prevTasks[activeIndex].status = overId as string;
+        return [...prevTasks];
+      });
+    }
+  };
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    setActiveTask(null);
+  };
+
+  const SortableTask = ({ task }: { task: typeof tasks[0] }) => {
+    const {
+      attributes,
+      listeners,
+      setNodeRef,
+      transform,
+      transition,
+      isDragging,
+    } = useSortable({ id: task.id });
+
+    const style = {
+      transform: CSS.Transform.toString(transform),
+      transition,
+      opacity: isDragging ? 0.5 : 1,
+    };
+
+    return (
+      <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
+        <TaskCard task={task} />
+      </div>
+    );
+  };
 
   const TaskCard = ({ task }: { task: typeof tasks[0] }) => (
     <Card className="bg-card hover:shadow-md transition-all duration-200 border border-border/50">
@@ -179,48 +283,88 @@ export default function Tasks() {
     </Card>
   );
 
-  const BoardView = () => (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-      {columns.map((column) => {
-        const columnTasks = filteredTasks.filter(task => task.status === column.id);
-        
-        return (
-          <div key={column.id} className="space-y-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-2">
-                <h3 className="font-medium text-foreground">{column.title}</h3>
-                <span className="bg-muted text-muted-foreground text-xs px-2 py-1 rounded-md">
-                  {columnTasks.length}
-                </span>
-              </div>
-              <div className="flex items-center space-x-1">
+  const DroppableColumn = ({ column, children }: { column: typeof columns[0], children: React.ReactNode }) => {
+    const {
+      setNodeRef,
+      isOver,
+    } = useSortable({ id: column.id });
+
+    return (
+      <div
+        ref={setNodeRef}
+        className={`space-y-4 min-h-[200px] ${isOver ? 'bg-accent/50 rounded-lg' : ''}`}
+      >
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-2">
+            <h3 className="font-medium text-foreground">{column.title}</h3>
+            <span className="bg-muted text-muted-foreground text-xs px-2 py-1 rounded-md">
+              {filteredTasks.filter(task => task.status === column.id).length}
+            </span>
+          </div>
+          <div className="flex items-center space-x-1">
+            <CreateTaskSheet
+              onCreateTask={handleCreateTask}
+              trigger={
                 <Button variant="ghost" size="icon" className="h-6 w-6">
                   <Plus className="h-3 w-3" />
                 </Button>
-                <Button variant="ghost" size="icon" className="h-6 w-6">
-                  <MoreHorizontal className="h-3 w-3" />
-                </Button>
-              </div>
-            </div>
-            
-            <div className="space-y-3">
-              {columnTasks.map((task) => (
-                <TaskCard key={task.id} task={task} />
-              ))}
-              
-              {column.id === "under-review" && columnTasks.length === 0 && (
-                <div className="border-2 border-dashed border-border rounded-lg p-6 text-center">
+              }
+            />
+            <Button variant="ghost" size="icon" className="h-6 w-6">
+              <MoreHorizontal className="h-3 w-3" />
+            </Button>
+          </div>
+        </div>
+        
+        <div className="space-y-3">
+          {children}
+          
+          {column.id === "under-review" && filteredTasks.filter(task => task.status === column.id).length === 0 && (
+            <CreateTaskSheet
+              onCreateTask={handleCreateTask}
+              trigger={
+                <div className="border-2 border-dashed border-border rounded-lg p-6 text-center cursor-pointer hover:border-border/80">
                   <Button variant="ghost" className="text-muted-foreground hover:text-foreground">
                     <Plus className="h-4 w-4 mr-2" />
                     Create task
                   </Button>
                 </div>
-              )}
-            </div>
-          </div>
-        );
-      })}
-    </div>
+              }
+            />
+          )}
+        </div>
+      </div>
+    );
+  };
+
+  const BoardView = () => (
+    <DndContext
+      sensors={sensors}
+      collisionDetection={closestCorners}
+      onDragStart={handleDragStart}
+      onDragOver={handleDragOver}
+      onDragEnd={handleDragEnd}
+    >
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {columns.map((column) => {
+          const columnTasks = filteredTasks.filter(task => task.status === column.id);
+          
+          return (
+            <SortableContext key={column.id} items={columnTasks.map(task => task.id)} strategy={verticalListSortingStrategy}>
+              <DroppableColumn column={column}>
+                {columnTasks.map((task) => (
+                  <SortableTask key={task.id} task={task} />
+                ))}
+              </DroppableColumn>
+            </SortableContext>
+          );
+        })}
+      </div>
+      
+      <DragOverlay>
+        {activeTask ? <TaskCard task={activeTask} /> : null}
+      </DragOverlay>
+    </DndContext>
   );
 
   const ListView = () => (
@@ -276,10 +420,15 @@ export default function Tasks() {
             Visual representation of your project's journey.
           </p>
         </div>
-        <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">
-          <Plus className="mr-2 h-4 w-4" />
-          Create
-        </Button>
+        <CreateTaskSheet
+          onCreateTask={handleCreateTask}
+          trigger={
+            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">
+              <Plus className="mr-2 h-4 w-4" />
+              Create
+            </Button>
+          }
+        />
       </div>
 
       <div className="flex items-center justify-between">
