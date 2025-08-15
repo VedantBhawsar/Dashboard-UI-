@@ -8,22 +8,37 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
-import { 
-  Upload, 
-  Edit, 
-  Shield, 
-  Users, 
-  CreditCard, 
-  Receipt, 
-  Bell, 
+import { AddTeamMemberSheet } from "@/components/add-team-member-sheet";
+import { UpgradePlanSheet } from "@/components/upgrade-plan-sheet";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import {
+  Upload,
+  Edit,
+  Shield,
+  CreditCard,
+  Receipt,
+  Bell,
   Plug,
   Camera,
   Linkedin,
-  Twitter
+  Twitter,
+  User,
+  Settings as SettingsIcon,
+  Trash2,
+  MoreHorizontal,
+  FolderOpen,
+  BarChart3,
+  Mail,
+  CheckCircle,
+  HardDrive,
+  MailIcon,
+  Plus
 } from "lucide-react";
 
 export default function Settings() {
   const [activeTab, setActiveTab] = useState("profile");
+  const [isAddMemberSheetOpen, setIsAddMemberSheetOpen] = useState(false);
+  const [isUpgradePlanSheetOpen, setIsUpgradePlanSheetOpen] = useState(false);
 
   return (
     <div className="flex-1 space-y-4 p-4 md:p-8 pt-6">
@@ -123,9 +138,9 @@ export default function Settings() {
                     <span className="flex items-center px-3 border border-r-0 border-input bg-muted text-muted-foreground text-sm rounded-l-md">
                       www.website.com/
                     </span>
-                    <Input 
-                      id="workspace-url" 
-                      className="rounded-l-none" 
+                    <Input
+                      id="workspace-url"
+                      className="rounded-l-none"
                       placeholder="workspace"
                     />
                   </div>
@@ -200,9 +215,48 @@ export default function Settings() {
                 <h3 className="text-2xl font-bold tracking-tight">Team members</h3>
                 <p className="text-muted-foreground">View and manage your team members.</p>
               </div>
-              <Button className="bg-primary hover:bg-primary/90">
+              <Button
+                className="bg-primary hover:bg-primary/90"
+                onClick={() => setIsAddMemberSheetOpen(true)}
+              >
                 + Add new
               </Button>
+            </div>
+
+            {/* Pending Invites Section */}
+            <div className="space-y-4">
+              <h4 className="text-lg font-semibold">Pending invites</h4>
+              <Card>
+                <CardContent className="p-4">
+                  <div className="grid grid-cols-12 gap-4 items-center py-2 hover:bg-muted/30 rounded-lg px-2">
+                    <div className="col-span-1">
+                      <input type="checkbox" className="rounded border-gray-300" />
+                    </div>
+                    <div className="col-span-3 flex items-center space-x-3">
+                      <div className="h-8 w-8 bg-muted rounded-full flex items-center justify-center">
+                        <span className="text-xs text-muted-foreground">SW</span>
+                      </div>
+                      <div>
+                        <p className="font-medium text-sm">steven.well@email.com</p>
+                      </div>
+                    </div>
+                    <div className="col-span-2">
+                      <Badge variant="outline" className="text-xs">Marketing</Badge>
+                    </div>
+                    <div className="col-span-2 text-sm text-muted-foreground">July 10, 2025</div>
+                    <div className="col-span-2 text-sm text-muted-foreground">N/A</div>
+                    <div className="col-span-1">
+                      <div className="flex items-center space-x-1">
+                        <div className="h-2 w-2 bg-yellow-500 rounded-full"></div>
+                        <span className="text-sm text-yellow-600">Pending</span>
+                      </div>
+                    </div>
+                    <div className="col-span-1">
+                      <Button variant="ghost" size="sm">⋯</Button>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
 
             <Card>
@@ -233,7 +287,7 @@ export default function Settings() {
                       </div>
                       <div className="col-span-3 flex items-center space-x-3">
                         <Avatar className="h-8 w-8">
-                          <AvatarImage src="" />
+                          <AvatarImage src="https://images.unsplash.com/photo-1680540692052-79fde1108370?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3ODQyNjN8MHwxfHNlYXJjaHwyfHxwcm9mZXNzaW9uYWwlMjBoZWFkc2hvdCUyMGJ1c2luZXNzJTIwcGVyc29ufGVufDB8MXx8fDE3NTUyMzU2NjN8MA&ixlib=rb-4.1.0&q=80&w=200" />
                           <AvatarFallback className="bg-blue-100 text-blue-600">RA</AvatarFallback>
                         </Avatar>
                         <div>
@@ -253,7 +307,27 @@ export default function Settings() {
                         </div>
                       </div>
                       <div className="col-span-1">
-                        <Button variant="ghost" size="sm">⋯</Button>
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                              <MoreHorizontal className="h-4 w-4" />
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end" className="w-48">
+                            <DropdownMenuItem className="flex items-center">
+                              <User className="mr-2 h-4 w-4" />
+                              View Profile
+                            </DropdownMenuItem>
+                            <DropdownMenuItem className="flex items-center">
+                              <SettingsIcon className="mr-2 h-4 w-4" />
+                              Permissions
+                            </DropdownMenuItem>
+                            <DropdownMenuItem className="flex items-center text-destructive">
+                              <Trash2 className="mr-2 h-4 w-4" />
+                              Remove
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
                       </div>
                     </div>
 
@@ -264,7 +338,7 @@ export default function Settings() {
                       </div>
                       <div className="col-span-3 flex items-center space-x-3">
                         <Avatar className="h-8 w-8">
-                          <AvatarImage src="" />
+                          <AvatarImage src="https://images.unsplash.com/photo-1610387694365-19fafcc86d86?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3ODQyNjN8MHwxfHNlYXJjaHwyfHxidXNpbmVzcyUyMHdvbWFuJTIwcHJvZmVzc2lvbmFsJTIwcG9ydHJhaXR8ZW58MHwxfHx8MTc1NTIzNTY3MXww&ixlib=rb-4.1.0&q=80&w=200" />
                           <AvatarFallback className="bg-purple-100 text-purple-600">BM</AvatarFallback>
                         </Avatar>
                         <div>
@@ -284,7 +358,27 @@ export default function Settings() {
                         </div>
                       </div>
                       <div className="col-span-1">
-                        <Button variant="ghost" size="sm">⋯</Button>
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                              <MoreHorizontal className="h-4 w-4" />
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end" className="w-48">
+                            <DropdownMenuItem className="flex items-center">
+                              <User className="mr-2 h-4 w-4" />
+                              View Profile
+                            </DropdownMenuItem>
+                            <DropdownMenuItem className="flex items-center">
+                              <SettingsIcon className="mr-2 h-4 w-4" />
+                              Permissions
+                            </DropdownMenuItem>
+                            <DropdownMenuItem className="flex items-center text-destructive">
+                              <Trash2 className="mr-2 h-4 w-4" />
+                              Remove
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
                       </div>
                     </div>
 
@@ -295,7 +389,7 @@ export default function Settings() {
                       </div>
                       <div className="col-span-3 flex items-center space-x-3">
                         <Avatar className="h-8 w-8">
-                          <AvatarImage src="" />
+                          <AvatarImage src="https://images.unsplash.com/photo-1599768431736-c78b881ae983?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3ODQyNjN8MHwxfHNlYXJjaHw0fHxwcm9mZXNzaW9uYWwlMjBoZWFkc2hvdCUyMGJ1c2luZXNzJTIwcGVyc29ufGVufDB8MXx8fDE3NTUyMzU2NjN8MA&ixlib=rb-4.1.0&q=80&w=200" />
                           <AvatarFallback className="bg-green-100 text-green-600">JS</AvatarFallback>
                         </Avatar>
                         <div>
@@ -315,7 +409,27 @@ export default function Settings() {
                         </div>
                       </div>
                       <div className="col-span-1">
-                        <Button variant="ghost" size="sm">⋯</Button>
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                              <MoreHorizontal className="h-4 w-4" />
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end" className="w-48">
+                            <DropdownMenuItem className="flex items-center">
+                              <User className="mr-2 h-4 w-4" />
+                              View Profile
+                            </DropdownMenuItem>
+                            <DropdownMenuItem className="flex items-center">
+                              <SettingsIcon className="mr-2 h-4 w-4" />
+                              Permissions
+                            </DropdownMenuItem>
+                            <DropdownMenuItem className="flex items-center text-destructive">
+                              <Trash2 className="mr-2 h-4 w-4" />
+                              Remove
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
                       </div>
                     </div>
 
@@ -326,7 +440,7 @@ export default function Settings() {
                       </div>
                       <div className="col-span-3 flex items-center space-x-3">
                         <Avatar className="h-8 w-8">
-                          <AvatarImage src="" />
+                          <AvatarImage src="https://images.unsplash.com/photo-1610631066894-62452ccb927c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3ODQyNjN8MHwxfHNlYXJjaHwzfHxidXNpbmVzcyUyMHdvbWFuJTIwcHJvZmVzc2lvbmFsJTIwcG9ydHJhaXR8ZW58MHwxfHx8MTc1NTIzNTY3MXww&ixlib=rb-4.1.0&q=80&w=200" />
                           <AvatarFallback className="bg-orange-100 text-orange-600">SS</AvatarFallback>
                         </Avatar>
                         <div>
@@ -346,7 +460,27 @@ export default function Settings() {
                         </div>
                       </div>
                       <div className="col-span-1">
-                        <Button variant="ghost" size="sm">⋯</Button>
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                              <MoreHorizontal className="h-4 w-4" />
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end" className="w-48">
+                            <DropdownMenuItem className="flex items-center">
+                              <User className="mr-2 h-4 w-4" />
+                              View Profile
+                            </DropdownMenuItem>
+                            <DropdownMenuItem className="flex items-center">
+                              <SettingsIcon className="mr-2 h-4 w-4" />
+                              Permissions
+                            </DropdownMenuItem>
+                            <DropdownMenuItem className="flex items-center text-destructive">
+                              <Trash2 className="mr-2 h-4 w-4" />
+                              Remove
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
                       </div>
                     </div>
 
@@ -357,7 +491,7 @@ export default function Settings() {
                       </div>
                       <div className="col-span-3 flex items-center space-x-3">
                         <Avatar className="h-8 w-8">
-                          <AvatarImage src="" />
+                          <AvatarImage src="https://images.unsplash.com/photo-1689600944138-da3b150d9cb8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3ODQyNjN8MHwxfHNlYXJjaHw0fHxidXNpbmVzcyUyMHdvbWFuJTIwcHJvZmVzc2lvbmFsJTIwcG9ydHJhaXR8ZW58MHwxfHx8MTc1NTIzNTY3MXww&ixlib=rb-4.1.0&q=80&w=200" />
                           <AvatarFallback className="bg-pink-100 text-pink-600">RL</AvatarFallback>
                         </Avatar>
                         <div>
@@ -377,7 +511,27 @@ export default function Settings() {
                         </div>
                       </div>
                       <div className="col-span-1">
-                        <Button variant="ghost" size="sm">⋯</Button>
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                              <MoreHorizontal className="h-4 w-4" />
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end" className="w-48">
+                            <DropdownMenuItem className="flex items-center">
+                              <User className="mr-2 h-4 w-4" />
+                              View Profile
+                            </DropdownMenuItem>
+                            <DropdownMenuItem className="flex items-center">
+                              <SettingsIcon className="mr-2 h-4 w-4" />
+                              Permissions
+                            </DropdownMenuItem>
+                            <DropdownMenuItem className="flex items-center text-destructive">
+                              <Trash2 className="mr-2 h-4 w-4" />
+                              Remove
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
                       </div>
                     </div>
 
@@ -388,7 +542,7 @@ export default function Settings() {
                       </div>
                       <div className="col-span-3 flex items-center space-x-3">
                         <Avatar className="h-8 w-8">
-                          <AvatarImage src="" />
+                          <AvatarImage src="https://images.unsplash.com/photo-1738750908048-14200459c3c9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3ODQyNjN8MHwxfHNlYXJjaHw1fHxwcm9mZXNzaW9uYWwlMjBoZWFkc2hvdCUyMGJ1c2luZXNzJTIwcGVyc29ufGVufDB8MXx8fDE3NTUyMzU2NjN8MA&ixlib=rb-4.1.0&q=80&w=200" />
                           <AvatarFallback className="bg-indigo-100 text-indigo-600">KR</AvatarFallback>
                         </Avatar>
                         <div>
@@ -419,7 +573,7 @@ export default function Settings() {
                       </div>
                       <div className="col-span-3 flex items-center space-x-3">
                         <Avatar className="h-8 w-8">
-                          <AvatarImage src="" />
+                          <AvatarImage src="https://images.unsplash.com/photo-1719835491911-99dd30f3f2dc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3ODQyNjN8MHwxfHNlYXJjaHw2fHxwcm9mZXNzaW9uYWwlMjBoZWFkc2hvdCUyMGJ1c2luZXNzJTIwcGVyc29ufGVufDB8MXx8fDE3NTUyMzU2NjN8MA&ixlib=rb-4.1.0&q=80&w=200" />
                           <AvatarFallback className="bg-teal-100 text-teal-600">MM</AvatarFallback>
                         </Avatar>
                         <div>
@@ -450,47 +604,406 @@ export default function Settings() {
         </TabsContent>
 
         <TabsContent value="plan" className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center">
-                <CreditCard className="mr-2 h-5 w-5" />
-                Current Plan
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="flex items-center space-x-4">
-                <div className="p-3 bg-primary/10 rounded-full">
-                  <Badge className="text-lg px-3 py-1">👑</Badge>
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-2xl font-bold tracking-tight">Membership plans</h3>
+              <p className="text-muted-foreground">View and manage your membership plan settings.</p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/* Starter Plan */}
+              <Card className="relative">
+                <CardHeader>
+                  <CardTitle className="text-xl">Starter</CardTitle>
+                  <div className="space-y-1">
+                    <p className="text-sm text-muted-foreground">Starting from</p>
+                    <div className="flex items-baseline">
+                      <span className="text-3xl font-bold">$1,299</span>
+                      <span className="text-muted-foreground ml-1">/month</span>
+                    </div>
+                    <p className="text-sm text-muted-foreground">Perfect for teams just starting out.</p>
+                  </div>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-3">
+                    <div className="flex items-center space-x-2">
+                      <User className="h-4 w-4 text-muted-foreground" />
+                      <span className="text-sm">5 users</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <FolderOpen className="h-4 w-4 text-muted-foreground" />
+                      <span className="text-sm">10 projects</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <BarChart3 className="h-4 w-4 text-muted-foreground" />
+                      <span className="text-sm">Basic analytics</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Mail className="h-4 w-4 text-muted-foreground" />
+                      <span className="text-sm">Email support</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <CheckCircle className="h-4 w-4 text-muted-foreground" />
+                      <span className="text-sm">Access to core features</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <HardDrive className="h-4 w-4 text-muted-foreground" />
+                      <span className="text-sm">5 GB file storage</span>
+                    </div>
+                  </div>
+                  <Button variant="outline" className="w-full" disabled>
+                    Current Plan
+                  </Button>
+                </CardContent>
+              </Card>
+
+              {/* Pro Plan */}
+              <Card className="relative border-primary">
+                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                  <Badge className="bg-red-500 text-white">Popular</Badge>
                 </div>
-                <div>
-                  <h3 className="font-semibold">Free trial</h3>
-                  <p className="text-sm text-muted-foreground">8 days left</p>
+                <CardHeader>
+                  <CardTitle className="text-xl">Pro</CardTitle>
+                  <div className="space-y-1">
+                    <p className="text-sm text-muted-foreground">Starting from</p>
+                    <div className="flex items-baseline">
+                      <span className="text-3xl font-bold">$3,549</span>
+                      <span className="text-muted-foreground ml-1">/month</span>
+                    </div>
+                    <p className="text-sm text-muted-foreground">Perfect for teams wanting to scale.</p>
+                  </div>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-3">
+                    <div className="flex items-center space-x-2">
+                      <User className="h-4 w-4 text-muted-foreground" />
+                      <span className="text-sm">10 users</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <FolderOpen className="h-4 w-4 text-muted-foreground" />
+                      <span className="text-sm">50 projects</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <BarChart3 className="h-4 w-4 text-muted-foreground" />
+                      <span className="text-sm">Advanced analytics</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Mail className="h-4 w-4 text-muted-foreground" />
+                      <span className="text-sm">Priority support</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <CheckCircle className="h-4 w-4 text-muted-foreground" />
+                      <span className="text-sm">Access to core features + API tools</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <HardDrive className="h-4 w-4 text-muted-foreground" />
+                      <span className="text-sm">100 GB file storage</span>
+                    </div>
+                  </div>
+                  <Button 
+                    className="w-full"
+                    onClick={() => setIsUpgradePlanSheetOpen(true)}
+                  >
+                    Upgrade
+                  </Button>
+                </CardContent>
+              </Card>
+
+              {/* Pro Plus Plan */}
+              <Card className="relative">
+                <CardHeader>
+                  <CardTitle className="text-xl">Pro Plus</CardTitle>
+                  <div className="space-y-1">
+                    <p className="text-sm text-muted-foreground">Starting from</p>
+                    <div className="flex items-baseline">
+                      <span className="text-3xl font-bold">$6,899</span>
+                      <span className="text-muted-foreground ml-1">/month</span>
+                    </div>
+                    <p className="text-sm text-muted-foreground">Perfect for large teams and businesses.</p>
+                  </div>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-3">
+                    <div className="flex items-center space-x-2">
+                      <User className="h-4 w-4 text-muted-foreground" />
+                      <span className="text-sm">20 users</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <FolderOpen className="h-4 w-4 text-muted-foreground" />
+                      <span className="text-sm">100 projects</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <BarChart3 className="h-4 w-4 text-muted-foreground" />
+                      <span className="text-sm">Advanced analytics</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <MailIcon className="h-4 w-4 text-muted-foreground" />
+                      <span className="text-sm">Priority support</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <CheckCircle className="h-4 w-4 text-muted-foreground" />
+                      <span className="text-sm">Access to core features + API tools</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <HardDrive className="h-4 w-4 text-muted-foreground" />
+                      <span className="text-sm">500 GB file storage</span>
+                    </div>
+                  </div>
+                  <Button 
+                    className="w-full"
+                    onClick={() => setIsUpgradePlanSheetOpen(true)}
+                  >
+                    Upgrade
+                  </Button>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Custom Quote Section */}
+            <Card>
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="text-lg font-semibold">Get in touch for a custom quote.</h3>
+                    <p className="text-sm text-muted-foreground mt-1">
+                      Designed for large organizations that require a custom solutions to meet their needs.
+                    </p>
+                  </div>
+                  <Button variant="default" className="bg-black text-white hover:bg-black/90">
+                    Contact Sales
+                  </Button>
                 </div>
-              </div>
-              <Button className="w-full">
-                👑 Upgrade to PRO
-              </Button>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          </div>
         </TabsContent>
 
         <TabsContent value="billing" className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center">
-                <Receipt className="mr-2 h-5 w-5" />
-                Billing & Invoices
-              </CardTitle>
-              <CardDescription>
-                Manage your billing information and view invoices.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground">
-                No billing information available for free trial.
-              </p>
-            </CardContent>
-          </Card>
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-2xl font-bold tracking-tight">Billing & Payments</h3>
+              <p className="text-muted-foreground">Managed your payment methods and view invoices.</p>
+            </div>
+
+            {/* Payment Methods Section */}
+            <div className="space-y-4">
+              <h4 className="text-lg font-semibold">Payment methods</h4>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* Visa Card */}
+                <div className="flex items-center space-x-3 p-4 border rounded-lg">
+                  <input type="radio" name="payment" defaultChecked className="rounded" />
+                  <div className="w-10 h-6 bg-primary rounded flex items-center justify-center">
+                    <span className="text-white text-xs font-bold">VISA</span>
+                  </div>
+                  <div className="flex-1">
+                    <p className="font-medium">Visa •••• 5089</p>
+                    <p className="text-sm text-muted-foreground">Exp. 03/29</p>
+                  </div>
+                  <Badge variant="secondary" className="bg-primary/10 text-primary">
+                    Default
+                  </Badge>
+                </div>
+
+                {/* Mastercard */}
+                <div className="flex items-center space-x-3 p-4 border rounded-lg">
+                  <input type="radio" name="payment" className="rounded" />
+                  <div className="w-8 h-5 flex items-center justify-center">
+                    <div className="w-4 h-4 bg-red-500 rounded-full opacity-80"></div>
+                    <div className="w-4 h-4 bg-orange-400 rounded-full -ml-2"></div>
+                  </div>
+                  <div className="flex-1">
+                    <p className="font-medium">Mastercard •••• 9182</p>
+                    <p className="text-sm text-muted-foreground">Exp. 03/29</p>
+                  </div>
+                </div>
+
+                {/* Apple Pay */}
+                <div className="flex items-center space-x-3 p-4 border rounded-lg">
+                  <input type="radio" name="payment" className="rounded" />
+                  <div className="w-8 h-5 bg-black rounded flex items-center justify-center">
+                    <span className="text-white text-xs">🍎</span>
+                  </div>
+                  <div className="flex-1">
+                    <p className="font-medium">Apple Pay</p>
+                  </div>
+                </div>
+
+                {/* PayPal */}
+                <div className="flex items-center space-x-3 p-4 border rounded-lg">
+                  <input type="radio" name="payment" className="rounded" />
+                  <div className="w-8 h-5 bg-primary rounded flex items-center justify-center">
+                    <span className="text-white text-xs font-bold">P</span>
+                  </div>
+                  <div className="flex-1">
+                    <p className="font-medium">PayPal</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Add Payment Method */}
+              <Button variant="ghost" className="justify-start text-muted-foreground">
+                <Plus className="mr-2 h-4 w-4" />
+                Add payment method
+              </Button>
+            </div>
+
+            {/* Billing History Section */}
+            <Card>
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <CardTitle>Billing history</CardTitle>
+                  <Button variant="ghost" size="sm" className="text-muted-foreground">
+                    <Receipt className="mr-2 h-4 w-4" />
+                    Download All
+                  </Button>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {/* Table Header */}
+                  <div className="grid grid-cols-12 gap-4 text-sm font-medium text-muted-foreground border-b pb-3">
+                    <div className="col-span-1">
+                      <input type="checkbox" className="rounded border-gray-300" />
+                    </div>
+                    <div className="col-span-4">Invoice</div>
+                    <div className="col-span-2">Membership</div>
+                    <div className="col-span-2">Billing Date</div>
+                    <div className="col-span-2">Status</div>
+                    <div className="col-span-1"></div>
+                  </div>
+
+                  {/* Invoice Rows */}
+                  <div className="space-y-3">
+                    {/* July 2025 Invoice */}
+                    <div className="grid grid-cols-12 gap-4 items-center py-3 hover:bg-muted/50 rounded-lg px-2">
+                      <div className="col-span-1">
+                        <input type="checkbox" className="rounded border-gray-300" />
+                      </div>
+                      <div className="col-span-4">
+                        <p className="font-medium">Invoice_July_2025</p>
+                      </div>
+                      <div className="col-span-2">
+                        <span className="text-sm text-muted-foreground">PRO</span>
+                      </div>
+                      <div className="col-span-2 text-sm text-muted-foreground">July 01, 2025</div>
+                      <div className="col-span-2">
+                        <div className="flex items-center space-x-1">
+                          <div className="h-2 w-2 bg-yellow-500 rounded-full"></div>
+                          <span className="text-sm text-yellow-600">Pending</span>
+                        </div>
+                      </div>
+                      <div className="col-span-1">
+                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                          <MoreHorizontal className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </div>
+
+                    {/* June 2025 Invoice */}
+                    <div className="grid grid-cols-12 gap-4 items-center py-3 hover:bg-muted/50 rounded-lg px-2">
+                      <div className="col-span-1">
+                        <input type="checkbox" className="rounded border-gray-300" />
+                      </div>
+                      <div className="col-span-4">
+                        <p className="font-medium">Invoice_June_2025</p>
+                      </div>
+                      <div className="col-span-2">
+                        <span className="text-sm text-muted-foreground">Starter</span>
+                      </div>
+                      <div className="col-span-2 text-sm text-muted-foreground">June 01, 2025</div>
+                      <div className="col-span-2">
+                        <div className="flex items-center space-x-1">
+                          <div className="h-2 w-2 bg-green-500 rounded-full"></div>
+                          <span className="text-sm text-green-600">Paid</span>
+                        </div>
+                      </div>
+                      <div className="col-span-1">
+                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                          <MoreHorizontal className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </div>
+
+                    {/* May 2025 Invoice */}
+                    <div className="grid grid-cols-12 gap-4 items-center py-3 hover:bg-muted/50 rounded-lg px-2">
+                      <div className="col-span-1">
+                        <input type="checkbox" className="rounded border-gray-300" />
+                      </div>
+                      <div className="col-span-4">
+                        <p className="font-medium">Invoice_May_2025</p>
+                      </div>
+                      <div className="col-span-2">
+                        <span className="text-sm text-muted-foreground">Starter</span>
+                      </div>
+                      <div className="col-span-2 text-sm text-muted-foreground">May 01, 2025</div>
+                      <div className="col-span-2">
+                        <div className="flex items-center space-x-1">
+                          <div className="h-2 w-2 bg-green-500 rounded-full"></div>
+                          <span className="text-sm text-green-600">Paid</span>
+                        </div>
+                      </div>
+                      <div className="col-span-1">
+                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                          <MoreHorizontal className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </div>
+
+                    {/* April 2025 Invoice */}
+                    <div className="grid grid-cols-12 gap-4 items-center py-3 hover:bg-muted/50 rounded-lg px-2">
+                      <div className="col-span-1">
+                        <input type="checkbox" className="rounded border-gray-300" />
+                      </div>
+                      <div className="col-span-4">
+                        <p className="font-medium">Invoice_April_2025</p>
+                      </div>
+                      <div className="col-span-2">
+                        <span className="text-sm text-muted-foreground">Starter</span>
+                      </div>
+                      <div className="col-span-2 text-sm text-muted-foreground">Apr 01, 2025</div>
+                      <div className="col-span-2">
+                        <div className="flex items-center space-x-1">
+                          <div className="h-2 w-2 bg-green-500 rounded-full"></div>
+                          <span className="text-sm text-green-600">Paid</span>
+                        </div>
+                      </div>
+                      <div className="col-span-1">
+                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                          <MoreHorizontal className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </div>
+
+                    {/* March 2025 Invoice */}
+                    <div className="grid grid-cols-12 gap-4 items-center py-3 hover:bg-muted/50 rounded-lg px-2">
+                      <div className="col-span-1">
+                        <input type="checkbox" className="rounded border-gray-300" />
+                      </div>
+                      <div className="col-span-4">
+                        <p className="font-medium">Invoice_March_2025</p>
+                      </div>
+                      <div className="col-span-2">
+                        <span className="text-sm text-muted-foreground">Starter</span>
+                      </div>
+                      <div className="col-span-2 text-sm text-muted-foreground">Mar 01, 2025</div>
+                      <div className="col-span-2">
+                        <div className="flex items-center space-x-1">
+                          <div className="h-2 w-2 bg-green-500 rounded-full"></div>
+                          <span className="text-sm text-green-600">Paid</span>
+                        </div>
+                      </div>
+                      <div className="col-span-1">
+                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                          <MoreHorizontal className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </TabsContent>
 
         <TabsContent value="notification" className="space-y-6">
@@ -557,6 +1070,18 @@ export default function Settings() {
           </Card>
         </TabsContent>
       </Tabs>
+
+      {/* Add Team Member Sheet */}
+      <AddTeamMemberSheet
+        open={isAddMemberSheetOpen}
+        onOpenChange={setIsAddMemberSheetOpen}
+      />
+
+      {/* Upgrade Plan Sheet */}
+      <UpgradePlanSheet
+        open={isUpgradePlanSheetOpen}
+        onOpenChange={setIsUpgradePlanSheetOpen}
+      />
     </div>
   );
 }
