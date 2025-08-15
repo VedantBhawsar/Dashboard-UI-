@@ -194,28 +194,259 @@ export default function Settings() {
         </TabsContent>
 
         <TabsContent value="team" className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center">
-                <Users className="mr-2 h-5 w-5" />
-                Team Management
-              </CardTitle>
-              <CardDescription>
-                Manage your team members and their permissions.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <Input placeholder="Invite team member by email" className="max-w-sm" />
-                  <Button>Send Invite</Button>
-                </div>
-                <p className="text-sm text-muted-foreground">
-                  Team members will have access to your workspace and projects.
-                </p>
+          <div className="space-y-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="text-2xl font-bold tracking-tight">Team members</h3>
+                <p className="text-muted-foreground">View and manage your team members.</p>
               </div>
-            </CardContent>
-          </Card>
+              <Button className="bg-primary hover:bg-primary/90">
+                + Add new
+              </Button>
+            </div>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>Team</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {/* Table Header */}
+                  <div className="grid grid-cols-12 gap-4 text-sm font-medium text-muted-foreground border-b pb-3">
+                    <div className="col-span-1">
+                      <input type="checkbox" className="rounded border-gray-300" />
+                    </div>
+                    <div className="col-span-3">Team member</div>
+                    <div className="col-span-2">Role</div>
+                    <div className="col-span-2">Date added</div>
+                    <div className="col-span-2">Last login</div>
+                    <div className="col-span-1">Status</div>
+                    <div className="col-span-1"></div>
+                  </div>
+
+                  {/* Team Members */}
+                  <div className="space-y-3">
+                    {/* Ryan Almeida */}
+                    <div className="grid grid-cols-12 gap-4 items-center py-3 hover:bg-muted/50 rounded-lg px-2">
+                      <div className="col-span-1">
+                        <input type="checkbox" className="rounded border-gray-300" />
+                      </div>
+                      <div className="col-span-3 flex items-center space-x-3">
+                        <Avatar className="h-8 w-8">
+                          <AvatarImage src="" />
+                          <AvatarFallback className="bg-blue-100 text-blue-600">RA</AvatarFallback>
+                        </Avatar>
+                        <div>
+                          <p className="font-medium">Ryan Almeida</p>
+                          <p className="text-sm text-muted-foreground">ryan.almeida@email.com</p>
+                        </div>
+                      </div>
+                      <div className="col-span-2">
+                        <Badge variant="secondary">Admin</Badge>
+                      </div>
+                      <div className="col-span-2 text-sm text-muted-foreground">Aug 28, 2024</div>
+                      <div className="col-span-2 text-sm text-muted-foreground">July 01, 2025</div>
+                      <div className="col-span-1">
+                        <div className="flex items-center space-x-1">
+                          <div className="h-2 w-2 bg-green-500 rounded-full"></div>
+                          <span className="text-sm text-green-600">Online</span>
+                        </div>
+                      </div>
+                      <div className="col-span-1">
+                        <Button variant="ghost" size="sm">⋯</Button>
+                      </div>
+                    </div>
+
+                    {/* Blossom Menezes */}
+                    <div className="grid grid-cols-12 gap-4 items-center py-3 hover:bg-muted/50 rounded-lg px-2">
+                      <div className="col-span-1">
+                        <input type="checkbox" className="rounded border-gray-300" />
+                      </div>
+                      <div className="col-span-3 flex items-center space-x-3">
+                        <Avatar className="h-8 w-8">
+                          <AvatarImage src="" />
+                          <AvatarFallback className="bg-purple-100 text-purple-600">BM</AvatarFallback>
+                        </Avatar>
+                        <div>
+                          <p className="font-medium">Blossom Menezes</p>
+                          <p className="text-sm text-muted-foreground">blossom.menezes@email.com</p>
+                        </div>
+                      </div>
+                      <div className="col-span-2">
+                        <Badge variant="outline">Project Head</Badge>
+                      </div>
+                      <div className="col-span-2 text-sm text-muted-foreground">Sep 15, 2024</div>
+                      <div className="col-span-2 text-sm text-muted-foreground">Jun 28, 2025</div>
+                      <div className="col-span-1">
+                        <div className="flex items-center space-x-1">
+                          <div className="h-2 w-2 bg-gray-400 rounded-full"></div>
+                          <span className="text-sm text-gray-600">Offline</span>
+                        </div>
+                      </div>
+                      <div className="col-span-1">
+                        <Button variant="ghost" size="sm">⋯</Button>
+                      </div>
+                    </div>
+
+                    {/* Jason Smith */}
+                    <div className="grid grid-cols-12 gap-4 items-center py-3 hover:bg-muted/50 rounded-lg px-2">
+                      <div className="col-span-1">
+                        <input type="checkbox" className="rounded border-gray-300" />
+                      </div>
+                      <div className="col-span-3 flex items-center space-x-3">
+                        <Avatar className="h-8 w-8">
+                          <AvatarImage src="" />
+                          <AvatarFallback className="bg-green-100 text-green-600">JS</AvatarFallback>
+                        </Avatar>
+                        <div>
+                          <p className="font-medium">Jason Smith</p>
+                          <p className="text-sm text-muted-foreground">jason.smith@email.com</p>
+                        </div>
+                      </div>
+                      <div className="col-span-2">
+                        <Badge variant="outline">Designer</Badge>
+                      </div>
+                      <div className="col-span-2 text-sm text-muted-foreground">Dec 07, 2024</div>
+                      <div className="col-span-2 text-sm text-muted-foreground">July 04, 2025</div>
+                      <div className="col-span-1">
+                        <div className="flex items-center space-x-1">
+                          <div className="h-2 w-2 bg-gray-400 rounded-full"></div>
+                          <span className="text-sm text-gray-600">Offline</span>
+                        </div>
+                      </div>
+                      <div className="col-span-1">
+                        <Button variant="ghost" size="sm">⋯</Button>
+                      </div>
+                    </div>
+
+                    {/* Susan Stevenson */}
+                    <div className="grid grid-cols-12 gap-4 items-center py-3 hover:bg-muted/50 rounded-lg px-2">
+                      <div className="col-span-1">
+                        <input type="checkbox" className="rounded border-gray-300" />
+                      </div>
+                      <div className="col-span-3 flex items-center space-x-3">
+                        <Avatar className="h-8 w-8">
+                          <AvatarImage src="" />
+                          <AvatarFallback className="bg-orange-100 text-orange-600">SS</AvatarFallback>
+                        </Avatar>
+                        <div>
+                          <p className="font-medium">Susan Stevenson</p>
+                          <p className="text-sm text-muted-foreground">susan.1148@email.com</p>
+                        </div>
+                      </div>
+                      <div className="col-span-2">
+                        <Badge variant="outline">Sales Specialist</Badge>
+                      </div>
+                      <div className="col-span-2 text-sm text-muted-foreground">Jan 14, 2025</div>
+                      <div className="col-span-2 text-sm text-muted-foreground">May 18, 2025</div>
+                      <div className="col-span-1">
+                        <div className="flex items-center space-x-1">
+                          <div className="h-2 w-2 bg-green-500 rounded-full"></div>
+                          <span className="text-sm text-green-600">Online</span>
+                        </div>
+                      </div>
+                      <div className="col-span-1">
+                        <Button variant="ghost" size="sm">⋯</Button>
+                      </div>
+                    </div>
+
+                    {/* Remi Levinge */}
+                    <div className="grid grid-cols-12 gap-4 items-center py-3 hover:bg-muted/50 rounded-lg px-2">
+                      <div className="col-span-1">
+                        <input type="checkbox" className="rounded border-gray-300" />
+                      </div>
+                      <div className="col-span-3 flex items-center space-x-3">
+                        <Avatar className="h-8 w-8">
+                          <AvatarImage src="" />
+                          <AvatarFallback className="bg-pink-100 text-pink-600">RL</AvatarFallback>
+                        </Avatar>
+                        <div>
+                          <p className="font-medium">Remi Levinge</p>
+                          <p className="text-sm text-muted-foreground">remi.levinge@email.com</p>
+                        </div>
+                      </div>
+                      <div className="col-span-2">
+                        <Badge variant="outline">Accounting</Badge>
+                      </div>
+                      <div className="col-span-2 text-sm text-muted-foreground">Jan 27, 2025</div>
+                      <div className="col-span-2 text-sm text-muted-foreground">July 02, 2025</div>
+                      <div className="col-span-1">
+                        <div className="flex items-center space-x-1">
+                          <div className="h-2 w-2 bg-green-500 rounded-full"></div>
+                          <span className="text-sm text-green-600">Online</span>
+                        </div>
+                      </div>
+                      <div className="col-span-1">
+                        <Button variant="ghost" size="sm">⋯</Button>
+                      </div>
+                    </div>
+
+                    {/* Kevin Rupert */}
+                    <div className="grid grid-cols-12 gap-4 items-center py-3 hover:bg-muted/50 rounded-lg px-2">
+                      <div className="col-span-1">
+                        <input type="checkbox" className="rounded border-gray-300" />
+                      </div>
+                      <div className="col-span-3 flex items-center space-x-3">
+                        <Avatar className="h-8 w-8">
+                          <AvatarImage src="" />
+                          <AvatarFallback className="bg-indigo-100 text-indigo-600">KR</AvatarFallback>
+                        </Avatar>
+                        <div>
+                          <p className="font-medium">Kevin Rupert</p>
+                          <p className="text-sm text-muted-foreground">kevin.r@email.com</p>
+                        </div>
+                      </div>
+                      <div className="col-span-2">
+                        <Badge variant="outline">Logistics</Badge>
+                      </div>
+                      <div className="col-span-2 text-sm text-muted-foreground">Feb 19, 2025</div>
+                      <div className="col-span-2 text-sm text-muted-foreground">July 06, 2025</div>
+                      <div className="col-span-1">
+                        <div className="flex items-center space-x-1">
+                          <div className="h-2 w-2 bg-green-500 rounded-full"></div>
+                          <span className="text-sm text-green-600">Online</span>
+                        </div>
+                      </div>
+                      <div className="col-span-1">
+                        <Button variant="ghost" size="sm">⋯</Button>
+                      </div>
+                    </div>
+
+                    {/* Mike McKenzie */}
+                    <div className="grid grid-cols-12 gap-4 items-center py-3 hover:bg-muted/50 rounded-lg px-2">
+                      <div className="col-span-1">
+                        <input type="checkbox" className="rounded border-gray-300" />
+                      </div>
+                      <div className="col-span-3 flex items-center space-x-3">
+                        <Avatar className="h-8 w-8">
+                          <AvatarImage src="" />
+                          <AvatarFallback className="bg-teal-100 text-teal-600">MM</AvatarFallback>
+                        </Avatar>
+                        <div>
+                          <p className="font-medium">Mike McKenzie</p>
+                          <p className="text-sm text-muted-foreground">mike.mckenzie22@email.com</p>
+                        </div>
+                      </div>
+                      <div className="col-span-2">
+                        <Badge variant="outline">Marketing</Badge>
+                      </div>
+                      <div className="col-span-2 text-sm text-muted-foreground">Jun 13, 2025</div>
+                      <div className="col-span-2 text-sm text-muted-foreground">July 03, 2025</div>
+                      <div className="col-span-1">
+                        <div className="flex items-center space-x-1">
+                          <div className="h-2 w-2 bg-gray-400 rounded-full"></div>
+                          <span className="text-sm text-gray-600">Offline</span>
+                        </div>
+                      </div>
+                      <div className="col-span-1">
+                        <Button variant="ghost" size="sm">⋯</Button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </TabsContent>
 
         <TabsContent value="plan" className="space-y-6">
