@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState } from "react";
 import {
   Calendar,
   Users,
@@ -9,9 +9,9 @@ import {
   Search,
   Bell,
   Crown,
-  Inbox
-} from "lucide-react"
-import { NavLink } from "react-router-dom"
+  Inbox,
+} from "lucide-react";
+import { Link, NavLink } from "react-router-dom";
 
 import {
   Sidebar,
@@ -24,11 +24,11 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@/components/ui/sidebar"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { SearchPopup } from "@/components/search-popup"
+} from "@/components/ui/sidebar";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { SearchPopup } from "@/components/search-popup";
 
 const menuItems = [
   { title: "Dashboard", url: "/", icon: LayoutDashboard },
@@ -38,12 +38,12 @@ const menuItems = [
   { title: "Contacts", url: "/contacts", icon: Users },
   { title: "Settings", url: "/settings", icon: Settings },
   { title: "Support", url: "/support", icon: HelpCircle },
-]
+];
 
 export function AppSidebar() {
-  const { state } = useSidebar()
-  const collapsed = state === "collapsed"
-  const [searchOpen, setSearchOpen] = useState(false)
+  const { state } = useSidebar();
+  const collapsed = state === "collapsed";
+  const [searchOpen, setSearchOpen] = useState(false);
 
   return (
     <Sidebar className="border-r bg-card">
@@ -58,8 +58,8 @@ export function AppSidebar() {
         <div className="space-y-4">
           {/* Quick Search */}
           <div className="px-2">
-            <Button 
-              variant="ghost" 
+            <Button
+              variant="ghost"
               className="w-full justify-start gap-2 h-10 text-muted-foreground hover:text-foreground"
               onClick={() => setSearchOpen(true)}
             >
@@ -70,30 +70,18 @@ export function AppSidebar() {
 
           {/* Inbox */}
           <div className="px-2">
-            <Button 
-              variant="ghost" 
-              className="w-full justify-between h-10 text-muted-foreground hover:text-foreground"
-            >
-              <div className="flex items-center gap-2">
-                <Bell className="h-4 w-4" />
-                {!collapsed && <span>Inbox</span>}
-              </div>
-              {!collapsed && <Badge variant="secondary">6</Badge>}
-            </Button>
-          </div>
-
-          {/* Notifications */}
-          <div className="px-2">
-            <Button 
-              variant="ghost" 
-              className="w-full justify-between h-10 text-muted-foreground hover:text-foreground"
-            >
-              <div className="flex items-center gap-2">
-                <Bell className="h-4 w-4" />
-                {!collapsed && <span>Notifications</span>}
-              </div>
-              {!collapsed && <Badge variant="secondary">11+</Badge>}
-            </Button>
+            <Link hrefLang="en" to="/inbox">
+              <Button
+                variant="ghost"
+                className="w-full justify-between h-10 text-muted-foreground hover:text-foreground"
+              >
+                <div className="flex items-center gap-2">
+                  <Bell className="h-4 w-4" />
+                  {!collapsed && <span>Inbox</span>}
+                </div>
+                {!collapsed && <Badge variant="secondary">6</Badge>}
+              </Button>
+            </Link>
           </div>
 
           {/* Main Navigation */}
@@ -103,12 +91,12 @@ export function AppSidebar() {
                 {menuItems.map((item) => (
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton asChild>
-                      <NavLink 
-                        to={item.url} 
+                      <NavLink
+                        to={item.url}
                         className={({ isActive }) =>
-                          `flex items-center gap-2 h-10 px-2 rounded-md transition-colors ${
-                            isActive 
-                              ? "bg-primary text-primary-foreground font-medium" 
+                          `flex items-center gap-2 h-12 px-2 rounded-md transition-colors ${
+                            isActive
+                              ? "bg-primary font-medium"
                               : "text-muted-foreground hover:text-foreground hover:bg-accent"
                           }`
                         }
@@ -157,13 +145,15 @@ export function AppSidebar() {
           {!collapsed && (
             <div className="flex-1 min-w-0">
               <div className="text-sm font-medium">Ryan</div>
-              <div className="text-xs text-muted-foreground">Free trial: 8 days left</div>
+              <div className="text-xs text-muted-foreground">
+                Free trial: 8 days left
+              </div>
             </div>
           )}
         </div>
       </div>
-      
+
       <SearchPopup open={searchOpen} onOpenChange={setSearchOpen} />
     </Sidebar>
-  )
+  );
 }

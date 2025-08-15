@@ -93,8 +93,8 @@ export function NotificationsPopup() {
         <ScrollArea className="h-80">
           <div className="p-2">
             {notifications.map((notification, index) => (
-              <div key={notification.id}>
-                <div className={`flex gap-3 p-3 rounded-lg hover:bg-accent cursor-pointer ${
+              <div key={notification.id} >
+                <div className={`flex gap-3 p-4 items-start rounded-lg hover:bg-accent cursor-pointer ${
                   !notification.read ? "bg-primary/5" : ""
                 }`}>
                   <div className={`p-2 rounded-full ${
