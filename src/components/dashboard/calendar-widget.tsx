@@ -7,9 +7,6 @@ const events = [
   { time: "8:30am", title: "Weekly sync", color: "bg-muted" },
   { time: "9:45am", title: "Project kickoff", color: "bg-muted" },
   { time: "8:00am", title: "Break", color: "bg-muted" },
-  { time: "11:00am", title: "File taxes", color: "bg-muted" },
-  { time: "02:30pm", title: "Photoshoot", color: "bg-muted" },
-  { time: "03:30pm", title: "Sales Meeting", color: "bg-muted" },
 ]
 
 const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
@@ -47,11 +44,10 @@ export function CalendarWidget() {
             </div>
           ))}
           {calendarDays.map((day, index) => (
-            <div 
-              key={day} 
-              className={`text-sm p-2 rounded-md cursor-pointer hover:bg-accent ${
-                day === 9 ? "bg-primary text-primary-foreground font-medium" : ""
-              }`}
+            <div
+              key={day}
+              className={`text-sm p-2 rounded-md cursor-pointer hover:bg-accent ${day === 9 ? "bg-primary text-primary-foreground font-medium" : ""
+                }`}
             >
               {day}
             </div>
