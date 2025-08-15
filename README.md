@@ -1,73 +1,200 @@
-# Welcome to your Lovable project
+# VertoDesk
 
-## Project info
+**Transform Your Business Management**
 
-**URL**: https://lovable.dev/projects/e00371b2-8f7c-4eec-a4a1-41189b89d4d1
+VertoDesk is a comprehensive business management dashboard that transforms how teams organize, track, and execute their work. Built with modern web technologies, it features advanced task management, calendar scheduling, contact management, and business analytics - all designed to streamline your workflow and boost productivity.
 
-## How can I edit this code?
+_From "Verto" (Latin for transform) - VertoDesk transforms traditional business management into an intuitive, powerful experience._
 
-There are several ways of editing your application.
+## Features
 
-**Use Lovable**
+### 📊 Dashboard Overview
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/e00371b2-8f7c-4eec-a4a1-41189b89d4d1) and start prompting.
+- Real-time business metrics and KPIs
+- Revenue tracking with interactive charts
+- Customer acquisition analytics
+- Monthly recurring revenue monitoring
+- Expense tracking and reporting
 
-Changes made via Lovable will be committed automatically to this repo.
+### ✅ Task Management
 
-**Use your preferred IDE**
+- Kanban-style board with drag-and-drop functionality
+- Multiple view modes (Board and List views)
+- Task prioritization (High, Medium, Low)
+- Team member assignment with avatars
+- Due date tracking and calendar integration
+- Real-time task search and filtering
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### 📅 Calendar & Scheduling
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+- Multiple calendar views (Month, Week, Day)
+- Event creation and management
+- Color-coded event categories
+- Time slot management
+- Meeting scheduling with guest management
+- Event descriptions and meeting links
 
-Follow these steps:
+### 👥 Contact Management
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+- Comprehensive contact database
+- Contact creation and editing
+- Search and filter capabilities
+- Integration with tasks and calendar events
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+### 🔔 Notifications & Inbox
 
-# Step 3: Install the necessary dependencies.
-npm i
+- Real-time notification system
+- Inbox management for important updates
+- Badge counters for unread items
+- Quick access from sidebar
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+### 🎨 Modern UI/UX
+
+- Dark/Light theme toggle
+- Responsive design for all devices
+- Collapsible sidebar navigation
+- Modern glassmorphism design elements
+- Smooth animations and transitions
+
+## Technology Stack
+
+- **Frontend Framework**: React 18 with TypeScript
+- **Build Tool**: Vite
+- **Styling**: Tailwind CSS with custom design system
+- **UI Components**: shadcn/ui (Radix UI primitives)
+- **State Management**: React Query (TanStack Query)
+- **Routing**: React Router DOM
+- **Drag & Drop**: @dnd-kit
+- **Form Handling**: React Hook Form with Zod validation
+- **Date Handling**: date-fns
+- **Charts**: Recharts
+- **Icons**: Lucide React
+- **Theme Management**: next-themes
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 18+ and npm (recommended: install with [nvm](https://github.com/nvm-sh/nvm#installing-and-updating))
+- Git
+
+### Installation
+
+1. **Clone the repository**
+
+   ```bash
+   git clone <YOUR_GIT_URL>
+   cd <YOUR_PROJECT_NAME>
+   ```
+
+2. **Install dependencies**
+
+   ```bash
+   npm install
+   ```
+
+3. **Start the development server**
+
+   ```bash
+   npm run dev
+   ```
+
+4. **Open your browser**
+   Navigate to `http://localhost:5173` to view the application.
+
+### Available Scripts
+
+- `npm run dev` - Start development server with hot reload
+- `npm run build` - Build for production
+- `npm run build:dev` - Build for development environment
+- `npm run preview` - Preview production build locally
+- `npm run lint` - Run ESLint for code quality
+
+## Project Structure
+
+```
+src/
+├── components/          # Reusable UI components
+│   ├── ui/             # shadcn/ui components
+│   ├── dashboard/      # Dashboard-specific components
+│   └── *.tsx           # Feature components (sheets, popups, etc.)
+├── pages/              # Route components
+│   ├── Index.tsx       # Dashboard home page
+│   ├── Tasks.tsx       # Task management
+│   ├── Calendar.tsx    # Calendar and events
+│   ├── Contacts.tsx    # Contact management
+│   └── *.tsx           # Other pages
+├── hooks/              # Custom React hooks
+├── lib/                # Utility functions
+└── main.tsx           # Application entry point
 ```
 
-**Edit a file directly in GitHub**
+## Key Features Breakdown
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Dashboard Analytics
 
-**Use GitHub Codespaces**
+- Customer metrics with growth indicators
+- Revenue visualization with interactive charts
+- Monthly recurring revenue tracking
+- Expense monitoring with trend analysis
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### Task Management System
 
-## What technologies are used for this project?
+- Drag-and-drop Kanban board
+- Task status tracking (To Do, In Progress, Under Review, Completed)
+- Priority levels with color coding
+- Team member assignments
+- Due date management
+- Search and filter functionality
 
-This project is built with:
+### Calendar Integration
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+- Multi-view calendar (Month/Week/Day)
+- Event creation with detailed information
+- Color-coded event categories
+- Time slot management
+- Guest management for meetings
 
-## How can I deploy this project?
+### Contact Management
 
-Simply open [Lovable](https://lovable.dev/projects/e00371b2-8f7c-4eec-a4a1-41189b89d4d1) and click on Share -> Publish.
+- Comprehensive contact profiles
+- Search and filter capabilities
+- Integration with tasks and calendar
+- Contact creation and editing workflows
 
-## Can I connect a custom domain to my Lovable project?
+## Development
 
-Yes, you can!
+### Adding New Features
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+1. Create components in the appropriate directory under `src/components/`
+2. Add new pages to `src/pages/` and update routing in `App.tsx`
+3. Use the existing design system and shadcn/ui components for consistency
+4. Follow TypeScript best practices and include proper type definitions
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+### Styling Guidelines
+
+- Use Tailwind CSS utility classes
+- Follow the established design system
+- Maintain responsive design principles
+- Use the theme system for dark/light mode compatibility
+
+### Other Platforms
+
+The application can be deployed to any static hosting service:
+
+- Vercel
+- Netlify
+- GitHub Pages
+- AWS S3 + CloudFront
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+This project is under the MIT License.
