@@ -38,7 +38,7 @@ All colors MUST be HSL.
 
     --success: 142 76% 36%;
     --success-foreground: 0 0% 98%;
-    
+
     --warning: 38 92% 50%;
     --warning-foreground: 0 0% 98%;
 
@@ -95,10 +95,10 @@ All colors MUST be HSL.
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
     --ring: 263 70% 64%;
-    
+
     --success: 142 76% 36%;
     --success-foreground: 0 0% 98%;
-    
+
     --warning: 38 92% 50%;
     --warning-foreground: 0 0% 98%;
 
@@ -127,4 +127,10 @@ All colors MUST be HSL.
   body {
     @apply bg-background text-foreground;
   }
+}
+
+body {
+  -webkit-font-smoothing: antialiased; /* For WebKit browsers like Chrome, Safari */
+  -moz-osx-font-smoothing: grayscale; /* For Firefox on macOS, effectively antialiased */
+  font-smooth: antialiased; /* Standard (but non-standard) property */
 }
